@@ -1,91 +1,98 @@
 //This is a rock paper scissors game to be played against a computer in the browser console.
 
 function getComputerChoice(){
-    let computerSelection = Math.random() * (3-1) + 1; 
-
+    let computerSelection = Math.floor(Math.random() * 3) + 1; 
     switch (computerSelection){
         case 1:
-            computerSelection = "rock";
-            return computerSelection;
+            return "rock";
         case 2:
-            computerSelection = "paper";
-            return computerSelection;
+            return "paper";
         case 3:
-            computerSelection = "scissors";
-            return computerSelection;
+            return "scissors";
     }
 }
 
-function playGame(playerSelection, computerSelection = getComputerChoice()){
+function playGame(playerSelection, computerSelection){
     let checkInput = typeof playerSelection
 
     if(checkInput === 'string'){
-        playerSelection = playerSelection.toLowerCase();
-        getWinner(playerSelection, computerSelection);
-        alert(getWinner)
-        //return getWinner;
-    }else {
         if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
             alert("You must enter a valid option!");
             playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
-            play(playerSelection, computerSelection = getComputerChoice());
+            playGame(playerSelection, computerSelection = getComputerChoice());
+        }else{
+            playerSelection = playerSelection.toLowerCase();
+            let winner = getWinner(playerSelection, computerSelection);
+            return winner;
         }
-    
+    }else {
+        //not a string...try again..
+        alert("You must enter a valid option!");
+        playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
+        playGame(playerSelection, computerSelection = getComputerChoice());
     }
 
 }
 
 function mainLoop(){
     //play 5 rounds 
+    let playerWins = 0;
+    let computerWins = 0;
+    let tieCounter = 0;
+    let winner = null;
+
     for(let i = 0; i<5; i++){
         let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
         let computerSelection = getComputerChoice();
 
+
         if (playerSelection === null){
-            alert("Game canceled!");
+            //alert("Game canceled!");
+            break;
         }else{
-            playGame(playerSelection, computerSelection);
+            winner = playGame(playerSelection, computerSelection);
+
+            if(winner === "player"){
+                alert(winner + " wins with " + playerSelection + ". The computer selected " + computerSelection + "!");
+                playerWins++
+            }else if (winner === "computer"){
+                alert(winner + " wins with " + computerSelection + ". The player chose " + playerSelection + "!");
+                computerWins++
+            }else{
+                alert("It was a tie! The player and computer both chose " + playerSelection + "!");
+                tieCounter++
+            }
         }
-        
-        
     }
+    alert("Player: " + playerWins + " and Computer: " + computerWins + " and " + tieCounter + " ties!");
 }
 
 function getWinner(playerSelection, computerSelection){
     switch(computerSelection){
         case "rock":
             if (playerSelection === "paper"){
-             getWinner = "Player Wins with Paper!";
-                return getWinner;
+                return "player";
             }else if (playerSelection === "rock"){
-                getWinner = "Tie! Try again!";
-                return getWinner;
+                return "tie";
             }else{
-                getWinner = "Computer wins with Rock!"
-                return getWinner;
+                return "computer";
             }
 
         case "paper":
             if (playerSelection === "paper"){
-                getWinner = "Tie! Try again!";
-                return getWinner;
+                return "tie";
             }else if (playerSelection === "rock"){
-                getWinner = "Computer wins with Paper!";
-                return getWinner;
+                return  "computer";
             }else{
-                getWinner = "Player wins with Scissors!"
-                return getWinner;
+                return "player";
             }
         case "scissors":
             if (playerSelection === "paper"){
-                getWinner = "Computer wins with Scissors!";
-                return getWinner;
+                return "computer";
             }else if (playerSelection === "rock"){
-                getWinner = "Player wins with Rock!";
-                return getWinner;
+                return "player";
             }else{
-                getWinner = "Tie! Try again!"
-                return getWinner;
+                return "tie";
             }
     }
 }
