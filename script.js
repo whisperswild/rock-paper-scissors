@@ -1,31 +1,33 @@
 //This is a rock paper scissors game to be played against a computer in the browser console.
 
 function getComputerChoice(){
-    let computerChoice = Math.random() * (3-1) + 1; 
+    let computerSelection = Math.random() * (3-1) + 1; 
 
-    switch (computerChoice){
+    switch (computerSelection){
         case 1:
-            computerChoice = "rock";
-            return computerChoice;
+            computerSelection = "rock";
+            return computerSelection;
         case 2:
-            computerChoice = "paper";
-            return computerChoice;
+            computerSelection = "paper";
+            return computerSelection;
         case 3:
-            computerChoice = "scissors";
-            return computerChoice;
+            computerSelection = "scissors";
+            return computerSelection;
     }
 }
 
-function play(playerSelection, computerSelection = getComputerChoice()){
-    
+function playGame(playerSelection, computerSelection = getComputerChoice()){
+    let checkInput = typeof playerSelection
 
-    if(typeof playerChoice === 'string'){
-        playerChoice = playerChoice.toLowerCase();
+    if(checkInput === 'string'){
+        playerSelection = playerSelection.toLowerCase();
         getWinner(playerSelection, computerSelection);
+        alert(getWinner)
+        //return getWinner;
     }else {
-        if (playerChoice != "rock" || playerChoice != "paper" || playerChoice != "scissors"){
+        if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
             alert("You must enter a valid option!");
-            playerChoice = prompt("What is your choice? Rock, Paper, or Scissors?");
+            playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
             play(playerSelection, computerSelection = getComputerChoice());
         }
     
@@ -33,22 +35,29 @@ function play(playerSelection, computerSelection = getComputerChoice()){
 
 }
 
-function playGame(){
+function mainLoop(){
     //play 5 rounds 
     for(let i = 0; i<5; i++){
-        let playerChoice = prompt("What is your choice? Rock, Paper, or Scissors?");
-        let computerChoice = getComputerChoice();
-        playGame(playerChoice, computerChoice);
+        let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
+        let computerSelection = getComputerChoice();
+
+        if (playerSelection === null){
+            alert("Game canceled!");
+        }else{
+            playGame(playerSelection, computerSelection);
+        }
+        
+        
     }
 }
 
 function getWinner(playerSelection, computerSelection){
-    switch(computerChoice){
+    switch(computerSelection){
         case "rock":
-            if (playerChoice === "paper"){
+            if (playerSelection === "paper"){
              getWinner = "Player Wins with Paper!";
                 return getWinner;
-            }else if (playerChoice === "rock"){
+            }else if (playerSelection === "rock"){
                 getWinner = "Tie! Try again!";
                 return getWinner;
             }else{
@@ -57,10 +66,10 @@ function getWinner(playerSelection, computerSelection){
             }
 
         case "paper":
-            if (playerChoice === "paper"){
+            if (playerSelection === "paper"){
                 getWinner = "Tie! Try again!";
                 return getWinner;
-            }else if (playerChoice === "rock"){
+            }else if (playerSelection === "rock"){
                 getWinner = "Computer wins with Paper!";
                 return getWinner;
             }else{
@@ -68,10 +77,10 @@ function getWinner(playerSelection, computerSelection){
                 return getWinner;
             }
         case "scissors":
-            if (playerChoice === "paper"){
+            if (playerSelection === "paper"){
                 getWinner = "Computer wins with Scissors!";
                 return getWinner;
-            }else if (playerChoice === "rock"){
+            }else if (playerSelection === "rock"){
                 getWinner = "Player wins with Rock!";
                 return getWinner;
             }else{
