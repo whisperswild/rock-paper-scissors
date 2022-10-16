@@ -1,4 +1,7 @@
 //This is a rock paper scissors game to be played against a computer in the browser console.
+
+//Could add a tie breaker function and have the game play "best of x" rounds.
+
 let playerWins = 0;
 let computerWins = 0;
 let tieCounter = 0;
@@ -17,8 +20,6 @@ function getComputerChoice(){
 
 
 function playGame(){
-    
-
     let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
     let checkInput = typeof playerSelection;
 
@@ -53,15 +54,14 @@ function mainLoop(){
     let winner = null;
 
     for(let i = 0; i<5; i++){
-       
-
         winner = playGame();
-
-       
-    
     }
 
     alert("Player won " + playerWins + " times and the Computer won " + computerWins + " times! There were " + tieCounter + " ties!");
+    
+    let playerWins = 0;
+    let computerWins = 0;
+    let tieCounter = 0;
 }
 
 function getWinner(playerSelection, computerSelection){
