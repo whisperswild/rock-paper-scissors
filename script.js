@@ -1,4 +1,7 @@
 //This is a rock paper scissors game to be played against a computer in the browser console.
+let playerWins = 0;
+let computerWins = 0;
+let tieCounter = 0;
 
 function getComputerChoice(){
     let computerSelection = Math.floor(Math.random() * 3) + 1; 
@@ -12,59 +15,53 @@ function getComputerChoice(){
     }
 }
 
-function playGame(playerSelection, computerSelection){
-    let checkInput = typeof playerSelection
 
-    if(checkInput === 'string'){
-        if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
+function playGame(){
+    
+
+    let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
+    let checkInput = typeof playerSelection;
+
+    playerSelection = playerSelection.toLowerCase();
+    if (playerSelection === null){
+        //alert("Game canceled!");
+        winner =  null;
+        return winner;
+    }else{
+        if(checkInput === 'string'){
+            if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
+                alert("You must enter a valid option!");           
+                playGame();
+            }else{
+                playerSelection = playerSelection.toLowerCase();
+                let computerSelection = getComputerChoice();
+                let winner = getWinner(playerSelection, computerSelection);
+                declareWinner(playerSelection, computerSelection, winner);
+    
+                return winner;
+            }
+        }else {
             alert("You must enter a valid option!");
-            playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
-            playGame(playerSelection, computerSelection = getComputerChoice());
-        }else{
-            playerSelection = playerSelection.toLowerCase();
-            let winner = getWinner(playerSelection, computerSelection);
-            return winner;
+            playGame();
         }
-    }else {
-        //not a string...try again..
-        alert("You must enter a valid option!");
-        playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
-        playGame(playerSelection, computerSelection = getComputerChoice());
     }
-
 }
 
 function mainLoop(){
     //play 5 rounds 
-    let playerWins = 0;
-    let computerWins = 0;
-    let tieCounter = 0;
+
     let winner = null;
 
     for(let i = 0; i<5; i++){
-        let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
-        let computerSelection = getComputerChoice();
+       
 
+        winner = playGame();
 
-        if (playerSelection === null){
-            //alert("Game canceled!");
-            break;
-        }else{
-            winner = playGame(playerSelection, computerSelection);
-
-            if(winner === "player"){
-                alert(winner + " wins with " + playerSelection + ". The computer selected " + computerSelection + "!");
-                playerWins++
-            }else if (winner === "computer"){
-                alert(winner + " wins with " + computerSelection + ". The player chose " + playerSelection + "!");
-                computerWins++
-            }else{
-                alert("It was a tie! The player and computer both chose " + playerSelection + "!");
-                tieCounter++
-            }
-        }
+       
+    
     }
-    alert("Player: " + playerWins + " and Computer: " + computerWins + " and " + tieCounter + " ties!");
+
+    alert("Player won " + playerWins + " times and the Computer won " + computerWins + " times! There were " + tieCounter + " ties!");
 }
 
 function getWinner(playerSelection, computerSelection){
@@ -94,5 +91,18 @@ function getWinner(playerSelection, computerSelection){
             }else{
                 return "tie";
             }
+    }
+}
+
+function declareWinner(playerSelection, computerSelection, winner){
+    if(winner === "player"){
+        alert(winner + " wins with " + playerSelection + ". The computer selected " + computerSelection + "!");
+        playerWins++
+    }else if (winner === "computer"){
+        alert(winner + " wins with " + computerSelection + ". The player chose " + playerSelection + "!");
+        computerWins++
+    }else{
+        alert("It was a tie! The player and computer both chose " + playerSelection + "!");
+        tieCounter++
     }
 }
