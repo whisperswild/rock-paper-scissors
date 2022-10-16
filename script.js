@@ -59,9 +59,9 @@ function mainLoop(){
 
     alert("Player won " + playerWins + " times and the Computer won " + computerWins + " times! There were " + tieCounter + " ties!");
     
-    let playerWins = 0;
-    let computerWins = 0;
-    let tieCounter = 0;
+    playerWins = 0;
+    computerWins = 0;
+    tieCounter = 0;
 }
 
 function getWinner(playerSelection, computerSelection){
