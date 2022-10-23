@@ -19,46 +19,25 @@ function getComputerChoice(){
 }
 
 
-function playGame(){
-    let playerSelection = prompt("What is your choice? Rock, Paper, or Scissors?");
+function playGame(playerSelection){
     let checkInput = typeof playerSelection;
 
     playerSelection = playerSelection.toLowerCase();
-    if (playerSelection === null){
-        //alert("Game canceled!");
-        winner =  null;
-        return winner;
-    }else{
-        if(checkInput === 'string'){
-            if (playerSelection != "rock" && playerSelection != "paper" && playerSelection != "scissors"){
-                alert("You must enter a valid option!");           
-                playGame();
-            }else{
-                playerSelection = playerSelection.toLowerCase();
-                let computerSelection = getComputerChoice();
-                let winner = getWinner(playerSelection, computerSelection);
-                declareWinner(playerSelection, computerSelection, winner);
+    let computerSelection = getComputerChoice();
+    let winner = getWinner(playerSelection, computerSelection);
+    declareWinner(playerSelection, computerSelection, winner);
     
-                return winner;
-            }
-        }else {
-            alert("You must enter a valid option!");
-            playGame();
-        }
-    }
+    return winner;
 }
 
-function mainLoop(){
-    //play 5 rounds 
+function endGame(){
+    const finalScore = document.createElement('div');
+    const scoreCard = document.querySelector('#scoreCard');
 
-    let winner = null;
-
-    for(let i = 0; i<5; i++){
-        winner = playGame();
-    }
-
-    alert("Player won " + playerWins + " times and the Computer won " + computerWins + " times! There were " + tieCounter + " ties!");
+    finalScore.textContent = "GAME OVER! Player won " + playerWins + " times and the Computer won " + computerWins + " times! There were " + tieCounter + " ties!";
     
+    scoreCard.appendChild(finalScore);
+
     playerWins = 0;
     computerWins = 0;
     tieCounter = 0;
@@ -95,14 +74,40 @@ function getWinner(playerSelection, computerSelection){
 }
 
 function declareWinner(playerSelection, computerSelection, winner){
+    const scoreCard = document.querySelector("#scoreCard");
+    const score = document.createElement('div');
+    const runningTotal = document.createElement('div');
+
+   
+
     if(winner === "player"){
-        alert(winner + " wins with " + playerSelection + ". The computer selected " + computerSelection + "!");
+        score.textContent = winner + " wins with " + playerSelection + ". The computer selected " + computerSelection + "!";
+       
         playerWins++
     }else if (winner === "computer"){
-        alert(winner + " wins with " + computerSelection + ". The player chose " + playerSelection + "!");
+        score.textContent = winner + " wins with " + computerSelection + ". The player chose " + playerSelection + "!";
         computerWins++
     }else{
-        alert("It was a tie! The player and computer both chose " + playerSelection + "!");
+        score.textContent = "It was a tie! The player and computer both chose " + playerSelection + "!";
         tieCounter++
     }
+
+    scoreCard.appendChild(score);
+    runningTotal.textContent = "Player wins: " + playerWins + " Computer wins: " + computerWins + " Ties: " + tieCounter
+    scoreCard.appendChild(runningTotal);
+
+    if (playerWins === 5 || computerWins === 5){
+        endGame();
+    }
 }
+
+const button = document.querySelector(".buttons");
+button.addEventListener('click', e => {
+    const whichButton = e.target.nodeName;
+    if(whichButton === 'BUTTON'){
+        playGame(e.target.id)
+    }
+
+
+});
+
